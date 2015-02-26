@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+# -*- python -*-
+
+# usage example: python aus 3205 3086 2086
+
+import ConfigParser
+import argparse
+import sys
+
+config = ConfigParser.RawConfigParser()
+parser = argparse.ArgumentParser()
+parser.add_argument("integers", metavar='N', type=int, nargs='+', help="port")
+args = parser.parse_args()
+
+for port in args.integers:
+    if not ((2000 <= port and port <= 2254) or (3000 <= port and port <= 3254)):
+        print "port {0} should be in range [2000,2254] or [3000,3254], quitting prepaturely".format(port)
+        sys.exit(1)
+
+for port in args.integers:
+    network='10.0.2'
+    octet = port-2000
+    if port > 3000:
+        network='10.0.3'
+        octet-=1000
+    print "lsof -t -i tcp@localhost:{0} | xargs kill -SIGTERM;".format(port),
+    print """autossh -M 0 -q -f -N -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -L {0}:{2}.{1}:3389 dev""".format(port,octet,network)
