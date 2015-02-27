@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 for port in args.integers:
     if not ((2000 <= port and port <= 2254) or (3000 <= port and port <= 3254)):
-        print "port {0} should be in range [2000,2254] or [3000,3254], quitting prepaturely".format(port)
+        print >>sys.stderr, "port {0} should be in range [2000,2254] or [3000,3254], quitting prepaturely".format(port)
         sys.exit(1)
 
 for port in args.integers:
