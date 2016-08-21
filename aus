@@ -24,4 +24,4 @@ for port in args.integers:
         network='10.0.3'
         octet-=1000
     print "lsof -t -i tcp@localhost:{0} | xargs kill -SIGTERM;".format(port),
-    print """autossh -M 0 -q -f -N -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -L {0}:{2}.{1}:3389 dev""".format(port,octet,network)
+    print """autossh -M 0 -q -f -N -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -L {0}:{2}.{1}:3389 ub4""".format(port,octet,network)
